@@ -70,7 +70,7 @@ MetaTrace solves this by:
 | **Frontend** | React.js, Tailwind CSS |
 | **Backend**  | FastAPI, Python, ExifTool |
 | **AI/ML**    | Isolation Forest, Groq AI |
-| **Blockchain** | Smart Contracts (Moonbase), NFT Minting (Solana → Polkadot AssetHub) |
+| **Blockchain** | Smart Contracts (Moonbase), NFT Minting Polkadot AssetHub) |
 | **Storage**  | IPFS (InterPlanetary File System) |
 
 ---

@@ -38,7 +38,8 @@ MetaTrace solves this by:
 - 🧠 **Detecting signs of tampering** or anomalies automatically  
 - 🔐 **Storing metadata on IPFS**, and saving its hash securely on **Moonbase (Polkadot)** using smart contracts  
 - 🎨 **Minting NFTs** for important files on **Polkadot AssetHub**
-- 💻 Providing a **user-friendly interface** for tech and non-tech users alike  
+- 💻 Providing a **user-friendly interface** for tech and non-tech users alike
+- **All file formats are accepted(jpg,png,mpv4,doc,pdf,zip, etc..)**
 
 ---
 

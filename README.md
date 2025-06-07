@@ -36,7 +36,7 @@ MetaTrace solves this by:
 
 - 🧩 **Extracting and analyzing metadata** using AI & ML (Isolation Forest anomaly detection + Groq AI)  
 - 🧠 **Detecting signs of tampering** or anomalies automatically  
-- 🔐 **Storing metadata on IPFS**, and saving its hash securely on **Moonbase (Polkadot)** using smart contracts  
+- 🔐 **Storing metadata on IPFS**, and saving its hash securely on **Polkadot Assethub** using smart contracts  
 - 🎨 **Minting NFTs** for important files on **Polkadot AssetHub**
 - 💻 Providing a **user-friendly interface** for tech and non-tech users alike
 - **All file formats are accepted(jpg,png,mpv4,doc,pdf,zip, etc..)**
@@ -71,7 +71,7 @@ MetaTrace solves this by:
 | **Frontend** | React.js, Tailwind CSS |
 | **Backend**  | FastAPI, Python, ExifTool |
 | **AI/ML**    | Isolation Forest, Groq AI |
-| **Blockchain** | Smart Contracts (Moonbase), NFT Minting Polkadot AssetHub) |
+| **Blockchain** | Smart Contracts , NFT Minting Polkadot AssetHub |
 | **Storage**  | IPFS (InterPlanetary File System) |
 
 ---

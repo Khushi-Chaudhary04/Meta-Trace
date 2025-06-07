@@ -16,7 +16,7 @@ export const config = {
 };
 
 // 🔹 Hardcoded Blockchain & DB Settings
-const MONGODB_URI = "mongodb+srv://chirag:chirag123@metatrace.zfxfj.mongodb.net/";
+const MONGODB_URI = "YOUR KEY here";
 const DB_NAME = "testdb";
 const CONTRACT_ADDRESS = "0x1D73f6d2244174D028fcfc17030ae5C41aD3511B";
 const RPC_URL = "https://testnet-passet-hub-eth-rpc.polkadot.io/";

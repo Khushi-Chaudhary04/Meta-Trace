@@ -26,28 +26,172 @@ const Upload = () => {
   const [recentUploadMetadata, setRecentUploadMetadata] = useState(null);
 
   // Smart contract details
-  const contractAddress = '0x791282CEa8B65442C9A10AF844bc364ADfb751b0';
+  const contractAddress = '0x764c2e97d8AC0BfD86A502cBC1544c7eEec38866';
   const contractABI = [
-    {
-      inputs: [
-        { internalType: 'address', name: 'to', type: 'address' },
-        { internalType: 'string', name: 'uri', type: 'string' }
-      ],
-      name: 'mint',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'nonpayable',
-      type: 'function'
-    },
-    // ... (rest of the ABI objects, omitted for brevity)
-    {
-      inputs: [],
-      name: 'totalSupply',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function'
-    }
-  ];
-
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "uri",
+				"type": "string"
+			}
+		],
+		"name": "mint",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "ownerOf",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "tokenURI",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
   useEffect(() => {
     fetchUserEmail();
   }, []);
@@ -179,8 +323,8 @@ const handleMintNFT = async () => {
     const userAccount = accounts[0];
 
     // Upload image to IPFS
-    const pinataApiKey = '25b25147c472c196555d';
-    const pinataSecretApiKey = '4162fa758e5b1cc705b97cc91ab58bb88b956db07d8044c8a75840fbf57dae24';
+    const pinataApiKey = '';
+    const pinataSecretApiKey = '';
 
     const imageFormData = new FormData();
     imageFormData.append('file', file);
@@ -236,11 +380,17 @@ const handleMintNFT = async () => {
     const metadataHash = metadataRes.data.IpfsHash;
     const tokenURI = `https://gateway.pinata.cloud/ipfs/${metadataHash}`;
 
-    // Mint NFT with contract
+    // Mint NFT with contract using 1 GWEI gas price
     const contract = new web3.eth.Contract(contractABI, contractAddress);
     await contract.methods
       .mint(userAccount, tokenURI)
-      .send({ from: userAccount });
+      .send({
+        from: userAccount,
+        
+        maxFeePerGas: web3.utils.toWei('0.01', 'gwei'),
+        maxPriorityFeePerGas: web3.utils.toWei('0.01', 'gwei')
+
+      });
 
     alert("✅ NFT minted successfully!");
   } catch (err) {
@@ -248,7 +398,6 @@ const handleMintNFT = async () => {
     alert('❌ Minting failed.');
   }
 };
-
 
   // Open modal with metadata details
   const handleMetadataClick = (metadata) => {

@@ -50,7 +50,7 @@ contract_abi = [
 
 contract = web3.eth.contract(address=CONTRACT_ADDRESS, abi=contract_abi)
 
-GEMINI_API_KEY = "AIzaSyB1QiMcUVr8Yd2yy0M9bkAFwmfe9KXho9c"
+GEMINI_API_KEY = "YOUR Gemini API KEY"
 
 # ========== Middleware ==========
 app = FastAPI()

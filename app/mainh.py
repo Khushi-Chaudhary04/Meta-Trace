@@ -79,7 +79,7 @@ async def upload_file(file: UploadFile = File(...), email: str = Form(...)):
         print(f"❌ Upload error: {str(e)}")
         raise HTTPException(status_code=500, detail="Upload failed")
 
-client = Groq(api_key="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")
+client = Groq(api_key="YOUR Key")
 
 @app.post("/recommend/")
 async def recommend(metadata: dict):

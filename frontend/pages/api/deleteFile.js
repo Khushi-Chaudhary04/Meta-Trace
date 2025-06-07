@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     }
 
     const client = await MongoClient.connect(
-      "mongodb+srv://chirag:chirag123@metatrace.zfxfj.mongodb.net/testdb?retryWrites=true&w=majority"
+      "YOUR Database UR"
     );
     const db = client.db();
     const collection = db.collection('uploads');

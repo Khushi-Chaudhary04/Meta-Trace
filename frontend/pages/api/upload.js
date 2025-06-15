@@ -1,8 +1,7 @@
 // /pages/api/upload.js
 
 import formidable from "formidable";
-import { v2 as cloudinary } from "cloudinary";
-import { MongoClient } from "mongodb";
+
 import fs from "fs";
 import fetch from "node-fetch";
 import FormData from "form-data";
@@ -16,7 +15,7 @@ export const config = {
 };
 
 // 🔹 Hardcoded Blockchain & DB Settings
-const MONGODB_URI = "YOUR KEY here";
+
 const DB_NAME = "testdb";
 const CONTRACT_ADDRESS = "0x1D73f6d2244174D028fcfc17030ae5C41aD3511B";
 const RPC_URL = "https://testnet-passet-hub-eth-rpc.polkadot.io/";
@@ -53,12 +52,7 @@ const CONTRACT_ABI = [
 
 const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
-// 🔹 Cloudinary Config
-cloudinary.config({
-  cloud_name: "chirag84",
-  api_key: "479271181843866",
-  api_secret: "0AKvBBfVnjjCRIU83Dr4_cqevvk",
-});
+
 
 // 🔹 Pinata Upload Function
 async function uploadToPinata(filePath, fileName) {
@@ -179,11 +173,7 @@ export default async function handler(req, res) {
 
       tempFilePath = file.filepath;
 
-      // Upload file to Cloudinary
-      const cloudinaryRes = await cloudinary.uploader.upload(tempFilePath, {
-        folder: "uploads",
-        resource_type: "raw",
-      });
+     
 
       // Upload file itself to Pinata/IPFS
       const ipfsHash = await uploadToPinata(tempFilePath, file.originalFilename);
@@ -203,16 +193,12 @@ export default async function handler(req, res) {
       const meta = await fastapi.json();
       const { message, ...metaNoMsg } = meta;
 
-      // Connect to MongoDB & save record
-      client = new MongoClient(MONGODB_URI);
-      await client.connect();
-      const db = client.db(DB_NAME);
-      const uploads = db.collection("uploads");
+      
 
       const fileRecord = {
         email,
         filename: file.originalFilename,
-        cloudinaryUrl: cloudinaryRes.secure_url,
+        
         ipfsUrl,
         pinataCid: ipfsHash,
         type: file.mimetype,
@@ -255,7 +241,7 @@ export default async function handler(req, res) {
       const { email } = req.query;
       if (!email) return res.status(400).json({ message: "Email required" });
 
-      client = new MongoClient(MONGODB_URI);
+      
       await client.connect();
       const db = client.db(DB_NAME);
       const files = await db.collection("uploads").find({ email }).sort({ uploadDate: -1 }).toArray();

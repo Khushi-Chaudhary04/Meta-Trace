@@ -1,27 +1,41 @@
 import pandas as pd
 import numpy as np
 import joblib
-from sklearn.ensemble import IsolationForest
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, accuracy_score
 
-DATASET_PATH = "metadata_dataset.csv"
-
+# Load dataset
+DATASET_PATH = "tampered_metadata_dataset.csv"
 df = pd.read_csv(DATASET_PATH)
 
+# Split features and label
+X = df.drop("label", axis=1)
+y = df["label"]
 
-df_numeric = df.select_dtypes(include=[np.number])
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)
 
-if df_numeric.empty:
-    raise ValueError("No numeric metadata found for anomaly detection.")
-
-X_train, X_test = train_test_split(df_numeric, test_size=0.2, random_state=42)
-
-iso_forest = IsolationForest(
-    n_estimators=100,  
-    contamination=0.05,  
+# Train Random Forest Classifier
+rf_model = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=10,
+    class_weight="balanced",
     random_state=42
 )
-iso_forest.fit(X_train)
+rf_model.fit(X_train, y_train)
 
-MODEL_PATH = "isolation_forest_model.pkl"
-joblib.dump(iso_forest, MODEL_PATH)
+# Predict & evaluate
+y_pred = rf_model.predict(X_test)
+acc = accuracy_score(y_test, y_pred)
+
+print(f"✅ Accuracy: {acc:.4f}")
+print("📊 Classification Report:")
+print(classification_report(y_test, y_pred))
+
+# Save model to file
+MODEL_PATH = "tampering_rf_model.pkl"
+joblib.dump(rf_model, MODEL_PATH)
+print(f"📁 Model saved to '{MODEL_PATH}'")

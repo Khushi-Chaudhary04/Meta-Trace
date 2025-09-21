@@ -1,3 +1,6 @@
+## 🎬 Demo Video
+📽️ **Watch the full demo here:** [https://drive.google.com/file/d/1KYlFGN8q5TBy3bHq7H7w28eZ8Eu-Oz89/view?usp=sharing]  
+
 # 🧠🔐 MetaTrace — AI-Powered Metadata Security on Blockchain
 
 MetaTrace is a powerful web application that uses **AI/ML** and **Polkadot blockchain** to **extract, analyze, and secure metadata** from digital files. It also enables **NFT minting** of critical files to ensure tamper-proof ownership and traceability.
